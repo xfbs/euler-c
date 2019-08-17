@@ -18,7 +18,7 @@ sources = [
 ]
 
 solutions = library(
-  'euler',
+  'eulerc',
   sources,
   dependencies: libeuler_dep)
 
