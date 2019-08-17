@@ -1,9 +1,3 @@
-[submodule "minitest"]
-    path = lib/crystal/minitest
-    url = https://github.com/ysbaddaden/minitest.cr
-[submodule "catch2"]
-    path = lib/cpp/catch2
-    url = https://github.com/catchorg/Catch2.git
-[submodule "range-v3"]
-    path = lib/cpp/range-v3
-    url = https://github.com/ericniebler/range-v3
+[submodule "subprojects/libeuler"]
+	path = subprojects/libeuler
+	url = https://github.com/xfbs/libeuler.c
