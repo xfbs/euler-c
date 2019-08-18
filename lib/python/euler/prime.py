@@ -1,1 +1,0 @@
-../../../src/003-largest-prime-factor/python/prime.py

@@ -1,1 +1,0 @@
-../../../src/010-summation-of-primes/python/sieve.py

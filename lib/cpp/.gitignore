@@ -1,4 +1,0 @@
-lib/*.a
-src/*.o
-test/all
-test/*.o
