@@ -48,9 +48,9 @@ int help(int argc, char *argv[]) {
 }
 
 int check(int argc, char *argv[]) {
-  for(size_t i = 0; euler_problems[i].number; i++) {
-    struct euler_problem *problem = &euler_problems[i];
-    struct euler_result result = problem->function();
+  for(size_t i = 0; euler_problems[i]; i++) {
+    const struct euler_problem *problem = euler_problems[i];
+    struct euler_result result = problem->solve();
     bool correct = euler_check(problem, &result);
 
     printf("%s result: %s (%s)\n", problem->name, result.result, correct ? "ok" : "err");
@@ -60,8 +60,8 @@ int check(int argc, char *argv[]) {
 }
 
 int list(int argc, char *argv[]) {
-  for(size_t i = 0; euler_problems[i].number; i++) {
-    struct euler_problem *problem = &euler_problems[i];
+  for(size_t i = 0; euler_problems[i]; i++) {
+    const struct euler_problem *problem = euler_problems[i];
 
     printf("%03zu %s\n", problem->number, problem->name);
   }
@@ -71,16 +71,16 @@ int list(int argc, char *argv[]) {
 
 int run(int argc, char *argv[]) {
   size_t num = 1;
-  struct euler_problem *problem = NULL;
+  const struct euler_problem *problem = NULL;
 
-  for(size_t i = 0; euler_problems[i].number; i++) {
-    if(euler_problems[i].number == num) {
-      problem = &euler_problems[i];
+  for(size_t i = 0; euler_problems[i]; i++) {
+    if(euler_problems[i]->number == num) {
+      problem = euler_problems[i];
     }
   }
 
   if(problem) {
-    struct euler_result result = problem->function();
+    struct euler_result result = problem->solve();
     bool correct = euler_check(problem, &result);
 
     printf("%s result: %s (%s)\n", problem->name, result.result, correct ? "ok" : "err");

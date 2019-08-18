@@ -19,5 +19,5 @@ void euler_write(struct euler_result *result, const char *format, ...) {
 }
 
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result) {
-  return 0 == bcrypt_checkpass(result->result, problem->solution);
+  return 0 == bcrypt_checkpass(result->result, problem->hash);
 }

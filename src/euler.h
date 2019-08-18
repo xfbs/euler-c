@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define euler_input_number(_name, _desc, _def) \
+  {.name = #_name, .desc = _desc, .type = EULER_NUMBER, .data._number = _def}
+
 struct euler_result {
   bool ok;
   char result[256];
@@ -11,14 +14,32 @@ struct euler_result {
 
 typedef struct euler_result euler_function(void);
 
+enum euler_type {
+  EULER_NUMBER,
+  EULER_FLOAT,
+  EULER_STRING,
+};
+
+struct euler_input {
+  const char *name;
+  const char *desc;
+  enum euler_type type;
+  union {
+    int64_t _number;
+    double _double;
+    const char *_string;
+  } data;
+};
+
 struct euler_problem {
   size_t number;
   const char *name;
-  const char *solution;
-  euler_function *function;
+  const char *hash;
+  euler_function *solve;
+  const struct euler_input *input;
 };
 
-extern struct euler_problem euler_problems[];
+extern const struct euler_problem *euler_problems[];
 
 void euler_write(struct euler_result *result, const char *format, ...);
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result);
