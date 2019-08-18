@@ -81,8 +81,8 @@ bcrypt_initsalt(int log_rounds, uint8_t *salt, size_t saltbuflen)
 	else if (log_rounds > 31)
 		log_rounds = 31;
 
-	snprintf(salt, saltbuflen, "$2b$%2.2u$", log_rounds);
-	encode_base64(salt + 7, csalt, sizeof(csalt));
+	snprintf((char *) salt, saltbuflen, "$2b$%2.2u$", log_rounds);
+	encode_base64((char *)salt + 7, csalt, sizeof(csalt));
 
 	return 0;
 }
@@ -209,7 +209,7 @@ bcrypt_newhash(const char *pass, int log_rounds, char *hash, size_t hashlen)
 {
 	char salt[BCRYPT_SALTSPACE];
 
-	if (bcrypt_initsalt(log_rounds, salt, sizeof(salt)) != 0)
+	if (bcrypt_initsalt(log_rounds, (uint8_t *)salt, sizeof(salt)) != 0)
 		return -1;
 
 	if (bcrypt_hashpass(pass, salt, hash, hashlen) != 0)
@@ -300,7 +300,7 @@ static int
 decode_base64(u_int8_t *buffer, size_t len, const char *b64data)
 {
 	u_int8_t *bp = buffer;
-	const u_int8_t *p = b64data;
+	const u_int8_t *p = (const u_int8_t *)b64data;
 	u_int8_t c1, c2, c3, c4;
 
 	while (bp < buffer + len) {
@@ -342,7 +342,7 @@ decode_base64(u_int8_t *buffer, size_t len, const char *b64data)
 static int
 encode_base64(char *b64buffer, const u_int8_t *data, size_t len)
 {
-	u_int8_t *bp = b64buffer;
+	u_int8_t *bp = (u_int8_t *)b64buffer;
 	const u_int8_t *p = data;
 	u_int8_t c1, c2;
 
@@ -379,7 +379,7 @@ bcrypt_gensalt(u_int8_t log_rounds)
 {
 	static char    gsalt[BCRYPT_SALTSPACE];
 
-	bcrypt_initsalt(log_rounds, gsalt, sizeof(gsalt));
+	bcrypt_initsalt(log_rounds, (uint8_t *)gsalt, sizeof(gsalt));
 
 	return gsalt;
 }
