@@ -12,8 +12,6 @@ struct euler_result {
   size_t length;
 };
 
-typedef struct euler_result euler_function(void);
-
 enum euler_type {
   EULER_NUMBER,
   EULER_FLOAT,
@@ -31,6 +29,8 @@ struct euler_input {
   } data;
 };
 
+typedef struct euler_result euler_function(const struct euler_input *input);
+
 struct euler_problem {
   size_t number;
   const char *name;
@@ -43,3 +43,4 @@ extern const struct euler_problem *euler_problems[];
 
 void euler_write(struct euler_result *result, const char *format, ...);
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result);
+struct euler_result euler_solve(const struct euler_problem *problem);

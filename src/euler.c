@@ -1,6 +1,7 @@
 #include "euler.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 #include <bcrypt.h>
 
 void euler_write(struct euler_result *result, const char *format, ...) {
@@ -20,4 +21,18 @@ void euler_write(struct euler_result *result, const char *format, ...) {
 
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result) {
   return 0 == bcrypt_checkpass(result->result, problem->hash);
+}
+
+struct euler_result euler_solve(const struct euler_problem *problem) {
+  struct euler_result result;
+
+  if(problem->solve) {
+    result = problem->solve(problem->input);
+  } else {
+    result.ok = false;
+    // we assume result is large enough to hold this.
+    strcpy(result.result, "No solution implemented.");
+  }
+
+  return result;
 }
