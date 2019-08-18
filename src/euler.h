@@ -21,3 +21,4 @@ struct euler_problem {
 extern struct euler_problem euler_problems[];
 
 void euler_write(struct euler_result *result, const char *format, ...);
+bool euler_check(const struct euler_problem *problem, const struct euler_result *result);

@@ -8,6 +8,9 @@ project(
 libeuler = subproject('libeuler')
 libeuler_dep = libeuler.get_variable('libeuler_dep')
 
+libopenbsd_bcrypt = subproject('bcrypt')
+libopenbsd_bcrypt_dep = libopenbsd_bcrypt.get_variable('libopenbsd_bcrypt_dep')
+
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required : false)
 
@@ -20,10 +23,10 @@ sources = [
 solutions = library(
   'eulerc',
   sources,
-  dependencies: libeuler_dep)
+  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep])
 
 euler = executable(
   'euler',
   'src/main.c',
   link_with: solutions,
-  dependencies: [libeuler_dep, m_dep])
+  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, m_dep])
