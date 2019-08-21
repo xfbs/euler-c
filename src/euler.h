@@ -10,6 +10,7 @@ struct euler_result {
   bool ok;
   char result[256];
   size_t length;
+  double time;
 };
 
 enum euler_type {

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <bcrypt.h>
+#include <time.h>
 
 void euler_write(struct euler_result *result, const char *format, ...) {
   va_list args;
@@ -13,6 +14,7 @@ void euler_write(struct euler_result *result, const char *format, ...) {
   if(ret < 0) {
     result->ok = false;
   } else {
+    result->ok = true;
     result->length = ret;
   }
 
@@ -27,9 +29,13 @@ struct euler_result euler_solve(const struct euler_problem *problem) {
   struct euler_result result;
 
   if(problem->solve) {
+    clock_t before = clock();
     result = problem->solve(problem->input);
+    clock_t total = clock() - before;
+    result.time = total / (double)CLOCKS_PER_SEC;
   } else {
     result.ok = false;
+    result.time = 0;
 
     // we assume result is large enough to hold this.
     strcpy(result.result, "No solution implemented.");
