@@ -26,12 +26,3 @@ const struct euler_input input001[] = {
   euler_input_number(b, "Number", 5),
   {NULL},
 };
-
-const struct euler_problem problem001 = {
-  .number = 1,
-  .name = "Multiples of 3 and 5",
-  .hash = "$2a$10$X84IpLPosVRrF3dKombQOuq5axndNs.gqIpwT32jqaIF9AMB.Iw2S",
-  .solve = solve001,
-  .input = input001,
-};
-

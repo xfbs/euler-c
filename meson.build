@@ -14,6 +14,9 @@ libopenbsd_bcrypt_dep = libopenbsd_bcrypt.get_variable('libopenbsd_bcrypt_dep')
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required : false)
 
+python3 = import('python').find_installation('python3')
+gen_problem_solved = find_program('scripts/gen_euler_solved.py')
+
 solved = ['001']
 
 sources = [
@@ -25,11 +28,22 @@ foreach n : solved
   sources += 'src/solve/solve@0@.c'.format(n)
 endforeach
 
+autogen = []
+
+foreach n : solved
+  autogen += custom_target(
+    'gen_problem',
+    output: 'problem@0@.c'.format(n),
+    input: ['data/@0@/problem.md'.format(n), 'data/@0@/solution.bcrypt'.format(n)],
+    command: [python3, gen_problem_solved, '@OUTPUT@', n, '@INPUT@'])
+endforeach
+
 include = include_directories('src')
 
 solutions = library(
   'eulerc',
   sources,
+  autogen,
   include_directories: include,
   dependencies: [libeuler_dep, libopenbsd_bcrypt_dep])
 
