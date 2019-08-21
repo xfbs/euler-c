@@ -16,12 +16,12 @@ m_dep = cc.find_library('m', required : false)
 
 python3 = import('python').find_installation('python3')
 gen_problem_solved = find_program('scripts/gen_euler_solved.py')
+gen_all = find_program('scripts/gen_problems.py')
 
 solved = ['001']
 
 sources = [
   'src/euler.c',
-  'src/all.c',
 ]
 
 foreach n : solved
@@ -37,6 +37,11 @@ foreach n : solved
     input: ['data/@0@/problem.md'.format(n), 'data/@0@/solution.bcrypt'.format(n)],
     command: [python3, gen_problem_solved, '@OUTPUT@', n, '@INPUT@'])
 endforeach
+
+autogen += custom_target(
+  'all.c',
+  output: 'all.c',
+  command: [python3, gen_all, '@OUTPUT@', solved])
 
 include = include_directories('src')
 
