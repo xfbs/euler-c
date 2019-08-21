@@ -16,7 +16,7 @@ int info_normal(struct info_opts opts);
 int info_json(struct info_opts opts);
 
 int info(int argc, char *argv[]) {
-  const char *short_opts = "haj";
+  const char *short_opts = "hj";
   static struct option long_opts[] = {
     {"help", no_argument, NULL, 'h'},
     {"json", no_argument, NULL, 'j'},

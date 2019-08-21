@@ -13,6 +13,8 @@ libopenbsd_bcrypt_dep = libopenbsd_bcrypt.get_variable('libopenbsd_bcrypt_dep')
 
 libjansson = dependency('jansson')
 
+libz = dependency('zlib')
+
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required : false)
 
@@ -62,7 +64,7 @@ solutions = library(
   sources,
   autogen,
   include_directories: include,
-  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, libjansson])
+  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, libjansson, libz])
 
 euler = executable(
   'euler',
@@ -73,6 +75,7 @@ euler = executable(
   'src/cmd_check.c',
   'src/cmd_run.c',
   'src/cmd_info.c',
+  'src/cmd_view.c',
   link_with: solutions,
   include_directories: include,
-  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, m_dep, libjansson])
+  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, m_dep, libjansson, libz])

@@ -78,3 +78,13 @@ int64_t euler_input_get_number(
   result->ok = false;
   return 0;
 }
+
+const struct euler_problem *euler_problem_get(size_t num) {
+  for(size_t i = 0; euler_problems[i]; i++) {
+    if(euler_problems[i]->number == num) {
+      return euler_problems[i];
+    }
+  }
+
+  return NULL;
+}

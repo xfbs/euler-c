@@ -22,7 +22,6 @@ print("const unsigned char description{}[] = {{".format(cwnumber))
 for byte in description:
     print("    {},".format(byte))
 
-print("    0")
 print("};")
 print()
 
@@ -31,6 +30,7 @@ print("    .number = {},".format(number))
 print("    .name = \"{}\",".format(title))
 print("    .hash = \"{}\",".format(solution))
 print("    .desc = description{},".format(cwnumber))
+print("    .desc_len = {},".format(len(description)))
 print("    .solve = NULL,")
 print("    .input = NULL,")
 print("};")

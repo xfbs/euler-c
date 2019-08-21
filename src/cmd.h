@@ -15,3 +15,4 @@ int check(int argc, char *argv[]);
 int list(int argc, char *argv[]);
 int run(int argc, char *argv[]);
 int info(int argc, char *argv[]);
+int view(int argc, char *argv[]);
