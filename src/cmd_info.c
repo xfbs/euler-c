@@ -86,6 +86,7 @@ int info_normal(struct info_opts opts) {
       printf("Title    %s\n", problem->name);
       printf("Hash     %s\n", problem->hash);
       printf("Solve    %s\n", problem->solve ? "Yes" : "No");
+      printf("Desc     %s\n", problem->desc ? "Yes" : "No");
 
       if(problem->input) {
         printf("\n");
@@ -127,6 +128,12 @@ int info_json(struct info_opts opts) {
       json_object_set_new(obj, "name", json_string(problem->name));
       json_object_set_new(obj, "hash", json_string(problem->hash));
       json_object_set_new(obj, "number", json_integer(problem->number));
+
+      if(problem->solve) {
+        json_object_set_new(obj, "solve", json_true());
+      } else {
+        json_object_set_new(obj, "solve", json_false());
+      }
 
       json_t *input = json_array();
 
