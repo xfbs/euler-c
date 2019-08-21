@@ -37,3 +37,16 @@ struct euler_result euler_solve(const struct euler_problem *problem) {
 
   return result;
 }
+
+const char *euler_type_str(enum euler_type type) {
+  switch(type) {
+    case EULER_NUMBER:
+      return "NUMBER";
+    case EULER_FLOAT:
+      return "FLOAT";
+    case EULER_STRING:
+      return "STRING";
+    default:
+      return NULL;
+  }
+}

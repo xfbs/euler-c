@@ -14,11 +14,11 @@ uint64_t even_fibonacci_numbers(uint64_t max) {
 
 struct euler_result solve002() {
   struct euler_result result;
-  euler_write(&result, "%u", even_fibonacci_numbers(1000000));
+  euler_write(&result, "%u", even_fibonacci_numbers(4000000));
   return result;
 }
 
 const struct euler_input input002[] = {
-  euler_input_number(max, "maximum", 1000000),
+  euler_input_number(max, "maximum", 4000000),
   {NULL},
 };

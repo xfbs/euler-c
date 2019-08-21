@@ -44,3 +44,4 @@ extern const struct euler_problem *euler_problems[];
 void euler_write(struct euler_result *result, const char *format, ...);
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result);
 struct euler_result euler_solve(const struct euler_problem *problem);
+const char *euler_type_str(enum euler_type type);

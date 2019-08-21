@@ -10,11 +10,10 @@ sys.stdout = open(out_file, 'w')
 number = int(number_str, 10)
 cwnumber = "%03d" % (number)
 
-title = open(description_file, "r").readline().rstrip()
+title = " ".join(open(description_file, "r").readline().rstrip().split()[3::])
 solution = open(solution_file, "r").read()
 
 print("#include \"euler.h\"")
-print("#include \"solve/solve{}.h\"".format(cwnumber))
 print()
 
 print("const struct euler_problem problem{} = {{".format(cwnumber))
