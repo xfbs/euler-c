@@ -17,7 +17,7 @@ cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required : false)
 
 python3 = import('python').find_installation('python3')
-gen_problem_solved = find_program('scripts/gen_euler_solved.py')
+gen_solved = find_program('scripts/gen_solved.py')
 gen_all = find_program('scripts/gen_problems.py')
 gen_unsolved = find_program('scripts/gen_unsolved.py')
 
@@ -39,7 +39,7 @@ foreach n : solved
     'gen_problem@0@'.format(n),
     output: 'problem@0@.c'.format(n),
     input: ['data/@0@/problem.md'.format(n), 'data/@0@/solution.bcrypt'.format(n)],
-    command: [python3, gen_problem_solved, '@OUTPUT@', n, '@INPUT@'])
+    command: [python3, gen_solved, '@OUTPUT@', n, '@INPUT@'])
 endforeach
 
 foreach n : unsolved
