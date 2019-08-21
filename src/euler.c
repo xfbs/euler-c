@@ -30,6 +30,7 @@ struct euler_result euler_solve(const struct euler_problem *problem) {
     result = problem->solve(problem->input);
   } else {
     result.ok = false;
+
     // we assume result is large enough to hold this.
     strcpy(result.result, "No solution implemented.");
   }
