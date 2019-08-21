@@ -36,6 +36,7 @@ struct euler_problem {
   size_t number;
   const char *name;
   const char *hash;
+  const unsigned char *desc;
   euler_function *solve;
   const struct euler_input *input;
 };
@@ -46,3 +47,5 @@ void euler_write(struct euler_result *result, const char *format, ...);
 bool euler_check(const struct euler_problem *problem, const struct euler_result *result);
 struct euler_result euler_solve(const struct euler_problem *problem);
 const char *euler_type_str(enum euler_type type);
+
+int64_t euler_input_get_number(const struct euler_input *input, const char *name, struct euler_result *result);

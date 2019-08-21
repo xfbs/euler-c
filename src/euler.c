@@ -56,3 +56,25 @@ const char *euler_type_str(enum euler_type type) {
       return NULL;
   }
 }
+
+int64_t euler_input_get_number(
+    const struct euler_input *input,
+    const char *name,
+    struct euler_result *result) {
+  for(size_t i = 0; input[i].name; i++) {
+    if(0 == strcmp(name, input[i].name)) {
+      if(input[i].type != EULER_NUMBER) {
+        euler_write(result, "Wrong type for input %x: expected NUMBER, got %x.", name, euler_type_str(input[i].type));
+        result->ok = false;
+        return 0;
+      }
+
+      result->ok = true;
+      return input[i].data._number;
+    }
+  }
+
+  euler_write(result, "Can't find input %s.", name);
+  result->ok = false;
+  return 0;
+}
