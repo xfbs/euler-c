@@ -5,17 +5,17 @@
 #include <getopt.h>
 #include <jansson.h>
 
-struct view_opts {
+struct info_opts {
   bool help;
   bool json;
   size_t number;
 };
 
-int view_help(const char *prog);
-int view_normal(struct view_opts opts);
-int view_json(struct view_opts opts);
+int info_help(const char *prog);
+int info_normal(struct info_opts opts);
+int info_json(struct info_opts opts);
 
-int view(int argc, char *argv[]) {
+int info(int argc, char *argv[]) {
   const char *short_opts = "haj";
   static struct option long_opts[] = {
     {"help", no_argument, NULL, 'h'},
@@ -23,7 +23,7 @@ int view(int argc, char *argv[]) {
     {NULL, no_argument, NULL, 0}
   };
 
-  struct view_opts opts = {false};
+  struct info_opts opts = {false};
 
   while(true) {
     int opt = getopt_long(argc, argv, short_opts, long_opts, NULL);
@@ -47,36 +47,41 @@ int view(int argc, char *argv[]) {
   }
 
   if(opts.help) {
-    return view_help(argv[0]);
+    return info_help(argv[0]);
   }
 
   // parse requested number.
   opts.number = atoi(argv[optind + 1]);
 
   if(opts.json) {
-    return view_json(opts);
+    return info_json(opts);
   } else {
-    return view_normal(opts);
+    return info_normal(opts);
   }
 }
 
-int view_help(const char *progname) {
+int info_help(const char *progname) {
   fprintf(
       stderr,
-      "Usage: %s help [OPTIONS] number\n\n"
+      "Get info on a specific problem.\n"
+      "Usage: %s info [OPTIONS] number\n\n"
       "OPTIONS\n"
       "  -h, --help   Show this help text.\n"
-      "  -j, --json   Output as JSON.\n",
+      "  -j, --json   Output as JSON.\n\n",
       progname);
 
   return 0;
 }
 
-int view_normal(struct view_opts opts) {
+int info_normal(struct info_opts opts) {
+  bool found = false;
+
   for(size_t i = 0; euler_problems[i]; i++) {
     const struct euler_problem *problem = euler_problems[i];
 
     if(problem->number == opts.number) {
+      found = true;
+
       printf("Problem  %03zu\n", problem->number);
       printf("Title    %s\n", problem->name);
       printf("Hash     %s\n", problem->hash);
@@ -104,10 +109,15 @@ int view_normal(struct view_opts opts) {
     }
   }
 
+  if(!found) {
+    fprintf(stderr, "Error: can't find problem %zu.\n", opts.number);
+    return -1;
+  }
+
   return 0;
 }
 
-int view_json(struct view_opts opts) {
+int info_json(struct info_opts opts) {
   json_t *obj = json_object();
 
   for(size_t i = 0; euler_problems[i]; i++) {
@@ -117,6 +127,37 @@ int view_json(struct view_opts opts) {
       json_object_set_new(obj, "name", json_string(problem->name));
       json_object_set_new(obj, "hash", json_string(problem->hash));
       json_object_set_new(obj, "number", json_integer(problem->number));
+
+      json_t *input = json_array();
+
+      if(problem->input) {
+        for(size_t i = 0; problem->input[i].name; i++) {
+          const struct euler_input *in = &problem->input[i];
+
+          json_t *obj = json_object();
+          json_object_set_new(obj, "name", json_string(in->name));
+          json_object_set_new(obj, "desc", json_string(in->desc));
+          json_object_set_new(obj, "type", json_string(euler_type_str(in->type)));
+
+          switch(in->type) {
+            case EULER_NUMBER:
+              json_object_set_new(obj, "default", json_integer(in->data._number));
+              break;
+            case EULER_FLOAT:
+              json_object_set_new(obj, "default", json_real(in->data._double));
+              break;
+            case EULER_STRING:
+              json_object_set_new(obj, "default", json_string(in->data._string));
+              break;
+            default:
+              break;
+          }
+
+          json_array_append_new(input, obj);
+        }
+      }
+
+      json_object_set_new(obj, "input", input);
     }
   }
 

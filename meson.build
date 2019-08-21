@@ -72,7 +72,7 @@ euler = executable(
   'src/cmd_list.c',
   'src/cmd_check.c',
   'src/cmd_run.c',
-  'src/cmd_view.c',
+  'src/cmd_info.c',
   link_with: solutions,
   include_directories: include,
   dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, m_dep, libjansson])
