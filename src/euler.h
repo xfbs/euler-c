@@ -5,6 +5,9 @@
 
 #define euler_input_number(_name, _desc, _def) \
   {.name = #_name, .desc = _desc, .type = EULER_NUMBER, .data._number = _def}
+#define euler_problem_declare(num) \
+  struct euler_result solve##num##(const struct euler_input *input); \
+  extern const struct euler_input input##num##[]
 
 struct euler_result {
   bool ok;
@@ -28,6 +31,16 @@ struct euler_input {
     double _double;
     const char *_string;
   } data;
+  union {
+    struct {
+      int64_t min;
+      int64_t max;
+    } n;
+    struct {
+      double min;
+      double max;
+    } f;
+  } limits;
 };
 
 typedef struct euler_result euler_function(const struct euler_input *input);
