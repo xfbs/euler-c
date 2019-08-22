@@ -8,7 +8,7 @@ int check(int argc, char *argv[]) {
     const struct euler_problem *problem = euler_problems[i];
 
     if(problem->solve) {
-      struct euler_result result = euler_solve(problem);
+      struct euler_result result = euler_solve(problem, NULL);
       bool correct = false;
 
       // only check if there was no error.

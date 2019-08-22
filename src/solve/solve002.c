@@ -12,11 +12,14 @@ uint64_t even_fibonacci_numbers(uint64_t max) {
   return sum;
 }
 
-struct euler_result solve002(const struct euler_input *input) {
+struct euler_result solve002(json_t *input) {
   struct euler_result result;
+  int64_t max;
 
-  uint64_t max = euler_input_get_number(input, "max", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input002, input, &max);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%u", even_fibonacci_numbers(max));
   return result;

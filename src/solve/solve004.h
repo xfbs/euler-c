@@ -3,5 +3,5 @@
 
 uint32_t largest_palindrome_product(uint32_t digits);
 
-struct euler_result solve004(const struct euler_input *input);
+struct euler_result solve004(json_t *input);
 extern const struct euler_input input004[];

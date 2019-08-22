@@ -11,11 +11,14 @@ uint32_t smallest_multiple(uint32_t max) {
   return l;
 }
 
-struct euler_result solve005(const struct euler_input *input) {
+struct euler_result solve005(json_t *input) {
   struct euler_result result;
+  int64_t max;
 
-  uint64_t max = euler_input_get_number(input, "max", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input005, input, &max);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%u", smallest_multiple(max));
   return result;

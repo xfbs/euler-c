@@ -24,11 +24,14 @@ bool is_pythagorean_triplet(uint32_t a, uint32_t b, uint32_t c) {
   return true;
 }
 
-struct euler_result solve009(const struct euler_input *input) {
+struct euler_result solve009(json_t *input) {
   struct euler_result result;
+  int64_t sum;
 
-  uint32_t sum = euler_input_get_number(input, "sum", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input009, input, &sum);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%llu", special_pythagoran_triplet(sum));
 

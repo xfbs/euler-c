@@ -14,7 +14,7 @@ int run(int argc, char *argv[]) {
   }
 
   if(problem) {
-    struct euler_result result = euler_solve(problem);
+    struct euler_result result = euler_solve(problem, NULL);
     bool correct = euler_check(problem, &result);
 
     printf("%s result: %s (%s)\n", problem->name, result.result, correct ? "ok" : "err");

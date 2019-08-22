@@ -15,15 +15,14 @@ uint32_t sum_divisible(uint32_t max, uint32_t divisor) {
   return (bound * ((bound / divisor) + 1)) / 2;
 }
 
-struct euler_result solve001(const struct euler_input *input) {
+struct euler_result solve001(json_t *input) {
   struct euler_result result;
+  int64_t max, a, b;
 
-  uint32_t max = euler_input_get_number(input, "max", &result);
-  if(!result.ok) return result;
-  uint32_t a = euler_input_get_number(input, "a", &result);
-  if(!result.ok) return result;
-  uint32_t b = euler_input_get_number(input, "b", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input001, input, &max, &a, &b);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%u", sum_multiples(max, a, b));
   return result;

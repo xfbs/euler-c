@@ -13,11 +13,14 @@ uint64_t nth_prime(uint32_t pos) {
   return prime;
 }
 
-struct euler_result solve007(const struct euler_input *input) {
+struct euler_result solve007(json_t *input) {
   struct euler_result result;
+  int64_t nth;
 
-  uint32_t nth = euler_input_get_number(input, "nth", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input007, input, &nth);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%llu", nth_prime(nth));
 

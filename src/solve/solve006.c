@@ -7,11 +7,14 @@ uint32_t sum_square_difference(uint32_t n) {
   return (3 * n4 + 2 * n3 - 3 * n2 - 2 * n) / 12;
 }
 
-struct euler_result solve006(const struct euler_input *input) {
+struct euler_result solve006(json_t *input) {
   struct euler_result result;
+  int64_t max;
 
-  uint32_t max = euler_input_get_number(input, "max", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input006, input, &max);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%llu", sum_square_difference(max));
 

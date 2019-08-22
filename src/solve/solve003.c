@@ -18,11 +18,14 @@ uint64_t largest_prime_factor(uint64_t num) {
   return num;
 }
 
-struct euler_result solve003(const struct euler_input *input) {
+struct euler_result solve003(json_t *input) {
   struct euler_result result;
+  int64_t number;
 
-  uint64_t number = euler_input_get_number(input, "number", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input003, input, &number);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%llu", largest_prime_factor(number));
 

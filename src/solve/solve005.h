@@ -3,5 +3,5 @@
 
 uint32_t smallest_multiple(uint32_t digits);
 
-struct euler_result solve005(const struct euler_input *input);
+struct euler_result solve005(json_t *input);
 extern const struct euler_input input005[];

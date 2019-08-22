@@ -19,11 +19,14 @@ uint32_t largest_palindrome_product(uint32_t digits) {
   return match;
 }
 
-struct euler_result solve004(const struct euler_input *input) {
+struct euler_result solve004(json_t *input) {
   struct euler_result result;
+  int64_t digits;
 
-  uint32_t digits = euler_input_get_number(input, "digits", &result);
-  if(!result.ok) return result;
+  result = euler_input_get(input004, input, &digits);
+  if(!result.ok) {
+    return result;
+  }
 
   euler_write(&result, "%llu", largest_palindrome_product(digits));
 

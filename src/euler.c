@@ -25,12 +25,12 @@ bool euler_check(const struct euler_problem *problem, const struct euler_result 
   return 0 == bcrypt_checkpass(result->result, problem->hash);
 }
 
-struct euler_result euler_solve(const struct euler_problem *problem) {
+struct euler_result euler_solve(const struct euler_problem *problem, json_t *values) {
   struct euler_result result;
 
   if(problem->solve) {
     clock_t before = clock();
-    result = problem->solve(problem->input);
+    result = problem->solve(values);
     clock_t total = clock() - before;
     result.time = total / (double)CLOCKS_PER_SEC;
   } else {
@@ -87,4 +87,63 @@ const struct euler_problem *euler_problem_get(size_t num) {
   }
 
   return NULL;
+}
+
+struct euler_result euler_input_get(const struct euler_input *input, json_t *values, ...) {
+  va_list args;
+  va_start(args, values);
+  struct euler_result result = {.ok = true};
+
+  for(size_t i = 0; input[i].name; i++) {
+    json_t *value = NULL;
+
+    if(values) {
+      value = json_object_get(values, input[i].name);
+    }
+
+    int64_t *number;
+    double *decimal;
+    const char **string;
+
+    switch(input[i].type) {
+      case EULER_NUMBER:
+        // get the next pointer
+        number = va_arg(args, int64_t *);
+
+        // parse from input
+        if(value && json_is_integer(value)) {
+          *number = json_integer_value(value);
+
+          if(*number < input[i].limits.n.min) {
+            euler_write(&result, "Error parsing arg: %lli is smaller than minimum %lli.", *number, input[i].limits.n.min);
+            result.ok = false;
+            json_decref(value);
+            goto exit;
+          }
+
+          if(*number > input[i].limits.n.max) {
+            euler_write(&result, "Error parsing arg: %lli is bigger than maximum %lli.", *number, input[i].limits.n.max);
+            result.ok = false;
+            json_decref(value);
+          }
+        } else {
+          // use default
+          *number = input[i].data._number;
+        }
+        break;
+      case EULER_FLOAT:
+        decimal = va_arg(args, double *);
+        break;
+      case EULER_STRING:
+        string = va_arg(args, const char **);
+        break;
+    }
+
+    json_decref(value);
+  }
+
+exit:
+  va_end(args);
+
+  return result;
 }
