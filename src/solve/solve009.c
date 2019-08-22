@@ -1,6 +1,6 @@
-#include "solve.h"
+#include "solve009.h"
 
-uint32_t solve(uint32_t n) {
+uint32_t special_pythagoran_triplet(uint32_t n) {
   for (uint32_t c = (n - 3) / 3; c < (n - 1); c++) {
     for (uint32_t b = (n - c - 1) / 2; (c < n - c) ? (b < c) : (b < (n - c));
          b++) {
@@ -23,3 +23,19 @@ bool is_pythagorean_triplet(uint32_t a, uint32_t b, uint32_t c) {
     return false;
   return true;
 }
+
+struct euler_result solve009(const struct euler_input *input) {
+  struct euler_result result;
+
+  uint32_t sum = euler_input_get_number(input, "sum", &result);
+  if(!result.ok) return result;
+
+  euler_write(&result, "%llu", special_pythagoran_triplet(sum));
+
+  return result;
+}
+
+const struct euler_input input009[] = {
+  euler_input_number(sum, "sum of pythagorean triplet", 1000, 0, UINT32_MAX),
+  {NULL},
+};
