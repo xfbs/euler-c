@@ -3,8 +3,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define euler_input_number(_name, _desc, _def) \
-  {.name = #_name, .desc = _desc, .type = EULER_NUMBER, .data._number = _def}
+#define euler_input_number(_name, _desc, _def, _min, _max) { \
+  .name = #_name, \
+  .desc = _desc, \
+  .type = EULER_NUMBER, \
+  .data._number = _def, \
+  .limits.n.min = _min, \
+  .limits.n.max = _max}
+
 #define euler_problem_declare(num) \
   struct euler_result solve##num##(const struct euler_input *input); \
   extern const struct euler_input input##num##[]

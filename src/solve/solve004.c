@@ -31,6 +31,6 @@ struct euler_result solve004(const struct euler_input *input) {
 }
 
 const struct euler_input input004[] = {
-  euler_input_number(digits, "Number of digits", 3),
+  euler_input_number(digits, "Number of digits", 3, 1, UINT32_MAX),
   {NULL},
 };

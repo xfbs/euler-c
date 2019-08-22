@@ -23,6 +23,6 @@ struct euler_result solve002(const struct euler_input *input) {
 }
 
 const struct euler_input input002[] = {
-  euler_input_number(max, "maximum", 4000000),
+  euler_input_number(max, "maximum", 4000000, 0, INT64_MAX),
   {NULL},
 };

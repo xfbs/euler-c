@@ -30,8 +30,8 @@ struct euler_result solve001(const struct euler_input *input) {
 }
 
 const struct euler_input input001[] = {
-  euler_input_number(max, "Number", 999),
-  euler_input_number(a, "Number", 3),
-  euler_input_number(b, "Number", 5),
+  euler_input_number(max, "Number", 999, 0, INT64_MAX),
+  euler_input_number(a, "Number", 3, 1, INT64_MAX),
+  euler_input_number(b, "Number", 5, 1, INT64_MAX),
   {NULL},
 };

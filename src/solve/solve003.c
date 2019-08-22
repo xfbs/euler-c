@@ -30,6 +30,7 @@ struct euler_result solve003(const struct euler_input *input) {
 }
 
 const struct euler_input input003[] = {
-  euler_input_number(number, "Number of which to get the largest prime factor.", 600851475143),
+  euler_input_number(number, "Number of which to get the largest prime factor.", 600851475143, 2, INT64_MAX
+ ),
   {NULL},
 };
