@@ -1,9 +1,9 @@
-#include "solve.h"
+#include "solve021.h"
 #include <euler/math.h>
 #include <euler/prime.h>
 #include <stdbool.h>
 
-uint32_t solve(size_t max) {
+uint32_t amicable_numbers(size_t max) {
   bool pairs[max];
 
   // set all to false
@@ -41,3 +41,22 @@ uint32_t amicable_pair(uint32_t num) {
     return 0;
   }
 }
+
+struct euler_result solve021(json_t *input) {
+  struct euler_result result;
+  int64_t limit;
+
+  result = euler_input_get(input021, input, &limit);
+  if(!result.ok) {
+    return result;
+  }
+
+  euler_write(&result, "%llu", amicable_numbers(limit));
+
+  return result;
+}
+
+const struct euler_input input021[] = {
+  euler_input_number(limit, "maximum for amicable numbers.", 10000, 0, INT64_MAX),
+  {NULL},
+};
