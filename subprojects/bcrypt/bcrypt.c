@@ -56,6 +56,11 @@
 #define	BCRYPT_SALTSPACE	(7 + (BCRYPT_MAXSALT * 4 + 2) / 3 + 1)
 #define	BCRYPT_HASHSPACE	61
 
+// linux compat
+#ifndef _PASSWORD_LEN
+#define _PASSWORD_LEN 128
+#endif
+
 #define explicit_bzero(buf, len) memset(buf, 0, len)
 
 char   *bcrypt_gensalt(u_int8_t);
