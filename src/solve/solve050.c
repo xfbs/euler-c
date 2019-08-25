@@ -1,8 +1,8 @@
-#include "solve.h"
+#include "solve050.h"
 #include <euler/prime.h>
 #include <stddef.h>
 
-uint64_t solve(uint64_t max) {
+uint64_t consecutive_prime_sum(uint64_t max) {
   prime_t p = prime_new();
 
   // find the max len
@@ -34,3 +34,22 @@ uint64_t solve(uint64_t max) {
   prime_free(&p);
   return 0;
 }
+
+struct euler_result solve050(json_t *input) {
+  struct euler_result result;
+  int64_t max;
+
+  result = euler_input_get(input050, input, &max);
+  if(!result.ok) {
+    return result;
+  }
+
+  euler_write(&result, "%llu", consecutive_prime_sum(max));
+
+  return result;
+}
+
+const struct euler_input input050[] = {
+  euler_input_number(max, "maximum prime.", 1000000, 0, INT64_MAX),
+  {NULL},
+};
