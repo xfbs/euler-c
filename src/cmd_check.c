@@ -18,7 +18,7 @@ int check(int argc, char *argv[]) {
             "%03zu %s (\033[0;34m%.2fms\033[0m)\n",
             problem->number,
             correct ? "\033[0;32mcorrect\033[0m" : "\033[0;31mwrong\033[0m",
-            result.time / 1000);
+            result.time * 1000);
       } else {
         printf("%03zu \033[0;31merror\033[0m: %s\n", problem->number, result.result);
       }
