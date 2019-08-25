@@ -1,37 +1,35 @@
+sudo: false
+language: python
+
 matrix:
   include:
-    - language: rust
-      script: ruby euler.rb check --color --verbose --lang rust
-      before_install: gem install bcrypt
-    - language: crystal
-      script: ruby euler.rb check --color --verbose --lang crystal
-      before_install: gem install bcrypt
-    - language: ruby
-      script: ruby euler.rb check --color --verbose --lang ruby
-      before_install: gem install bcrypt
-    - language: python
-      script: ruby euler.rb check --color --verbose --lang python
-      before_install: gem install bcrypt
-    - language: c
-      script: ruby euler.rb check --color --verbose --lang c
-      before_install: gem install bcrypt
-      compiler: clang
-    - language: cpp
-      script: ruby euler.rb check --color --verbose --lang cpp
-      before_install: gem install bcrypt
-      compiler: clang
-    - language: c
-      env: NAME="ocaml"
-      script: ruby euler.rb check --color --verbose --lang ocaml
-      before_install: gem install bcrypt
-      before_script: opam init -a && eval `opam config env` && opam install -y ocamlfind ounit
-      addons:
-          apt:
-              sources:
-                  - avsm
-              packages:
-                  - aspcud
-                  - ocaml
-                  - opam
-notifications:
-  email: false
+    - os: linux
+      dist: xenial
+      env: CC=gcc
+      python: 3.6
+    - os: linux
+      dist: xenial
+      env: CC=clang
+      python: 3.6
+    - os: osx
+      python: 3.7
+
+install:
+  - export NINJA_LATEST=$(curl -s https://api.github.com/repos/ninja-build/ninja/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep ninja-linux.zip)
+  - wget "$NINJA_LATEST"
+  - unzip -q ninja-linux.zip -d ninja
+  - export PATH="$PWD/ninja:$PATH"
+  - pip install meson
+  - echo $PATH
+  - ls ninja
+  - ninja --version
+
+script:
+  - meson build
+  - ninja -C build
+  - ./build/euler-c check --timeout 100
+
+addons:
+  apt:
+    packages:
+    - libjansson-dev
