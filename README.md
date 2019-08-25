@@ -1,8 +1,11 @@
-# Project Euler in C
+# Project Euler in C [![Build Status](https://travis-ci.org/xfbs/euler-c.svg?branch=master)](https://travis-ci.org/xfbs/euler-c)
 
 These are my solutions to [Project Euler](https://projecteuler.net/) problems
 in C. All of these are written by me in an attempt to fool around with
 mathematics and sharpen my programming skills.
+
+Documentation and explanations for these solutions can be found at
+https://euler.xfbs.net/.
 
 ## Rules
 
@@ -34,7 +37,7 @@ To see the current progress and check the solutions.
 
 ## See Also
 
-All utility functions are located at [libeuler.c](https://github.com/xfbs/libeuler.c).
+All utility functions are located at [xfbs/libeulerutil](https://github.com/xfbs/libeulerutil).
 
 ## License
 
