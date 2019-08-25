@@ -234,7 +234,7 @@ bcrypt_checkpass(const char *pass, const char *goodhash)
 	if (bcrypt_hashpass(pass, goodhash, hash, sizeof(hash)) != 0)
 		return -1;
 	if (strlen(hash) != strlen(goodhash) ||
-	    timingsafe_bcmp(hash, goodhash, strlen(goodhash)) != 0) {
+	    memcmp(hash, goodhash, strlen(goodhash)) != 0) {
 		errno = EACCES;
 		return -1;
 	}
