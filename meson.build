@@ -64,7 +64,7 @@ solutions = library(
   sources,
   autogen,
   include_directories: include,
-  dependencies: [libeulerutil_dep, libopenbsd_bcrypt_dep, libjansson, libz])
+  dependencies: [libeulerutil_dep, libopenbsd_bcrypt_dep, m_dep, libjansson, libz])
 
 euler = executable(
   'euler-c',
