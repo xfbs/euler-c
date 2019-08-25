@@ -5,8 +5,8 @@ project(
   version: '0.1.0',
   license: 'MIT')
 
-libeuler = subproject('libeuler')
-libeuler_dep = libeuler.get_variable('libeuler_dep')
+libeulerutil = subproject('libeulerutil')
+libeulerutil_dep = libeulerutil.get_variable('libeulerutil_dep')
 
 libopenbsd_bcrypt = subproject('bcrypt')
 libopenbsd_bcrypt_dep = libopenbsd_bcrypt.get_variable('libopenbsd_bcrypt_dep')
@@ -64,7 +64,7 @@ solutions = library(
   sources,
   autogen,
   include_directories: include,
-  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, libjansson, libz])
+  dependencies: [libeulerutil_dep, libopenbsd_bcrypt_dep, libjansson, libz])
 
 euler = executable(
   'euler-c',
@@ -78,4 +78,4 @@ euler = executable(
   'src/cmd_view.c',
   link_with: solutions,
   include_directories: include,
-  dependencies: [libeuler_dep, libopenbsd_bcrypt_dep, m_dep, libjansson, libz])
+  dependencies: [libeulerutil_dep, libopenbsd_bcrypt_dep, m_dep, libjansson, libz])
