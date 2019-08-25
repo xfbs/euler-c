@@ -1,8 +1,8 @@
-#include "solve.h"
+#include "solve023.h"
 #include <euler/math.h>
 #include <stdbool.h>
 
-uint32_t solve(size_t max) {
+uint32_t non_abundant_sums(size_t max) {
   uint8_t possible[max];
   for (size_t i = 0; i < max; i++)
     possible[i] = false;
@@ -39,3 +39,22 @@ uint32_t solve(size_t max) {
 
   return sum;
 }
+
+struct euler_result solve023(json_t *input) {
+  struct euler_result result;
+  int64_t max;
+
+  result = euler_input_get(input023, input, &max);
+  if(!result.ok) {
+    return result;
+  }
+
+  euler_write(&result, "%llu", non_abundant_sums(max));
+
+  return result;
+}
+
+const struct euler_input input023[] = {
+  euler_input_number(max, "maximum number to check.", 28123, 0, INT64_MAX),
+  {NULL},
+};
